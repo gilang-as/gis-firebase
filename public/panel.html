@@ -1,0 +1,122 @@
+<html>
+<head>
+  <title>GIS PANEL</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+  .form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.form-inline button, #button2 {
+  padding: 10px 20px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
+  cursor: pointer;
+}
+
+.form-inline button:hover {
+  background-color: royalblue;
+}
+#map {
+    height: 400px;
+    width: 100%;
+  }
+
+.alert, .alert-edit{
+    text-align: center;
+    padding: 10px;
+    background-color: #79c879;
+    color: #fff;
+    margin: 10px;
+    display: none;
+}
+#box ul{
+    border: 1px solid black;
+    background-color: #79c879;
+}
+  </style>
+</head>
+<body>
+
+  <div id="login_div" class="main-div">
+    <h3>GIS Pertanian Hidroponik</h3>
+    <input type="email" placeholder="Surel..." id="email_field" />
+    <input type="password" placeholder="Password..." id="password_field" />
+
+    <button onclick="login()">Masuk</button>
+  </div>
+
+  <div id="user_div" class="loggedin-div">
+    <h3>Panel</h3>
+    <p id="user_para">Welcome to Firebase web login Example. You're currently logged in.</p>
+    <button onclick="logout()">Logout</button>
+	<div class="">
+		<div class="alert">Your map has been saved!!!</div>
+		<div class="alert-edit">Your map has been edited!!!</div>
+		<div id="section-first">
+		<h3>Tambah</h3>
+			<form class="form-inline" id="map-form">
+				<input type="text" id="title" placeholder="Nama" name="title" required>
+				<input type="text" id="address" placeholder="Alamat" name="address" required>
+				<input type="text" id="icon" placeholder="Icon" name="icon" required>
+				<input type="text" id="img" placeholder="Gambar" name="img" required>
+				<input type="number" id="lat" placeholder="Enter Latitude" name="lat" step="0.00000001" required>
+				<input type="number" id="lng" placeholder="Enter Longitude" name="lng" step="0.00000001" required>
+				<input type="text" id="phone" placeholder="Phone" name="phone" required>
+				<input type="text" id="tags" placeholder="Tags" name="tags" required>
+				<input type="text" id="url" placeholder="Website" name="url" required>
+				<button type="submit">Tambah</button>
+				<button style="display: none" id="button2" type="submit">Edit</button>
+			  </form>
+		</div>
+		<div id="box"></div>
+	</div>
+  </div>
+
+<!-- Firebase App is always required and must be first -->
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
+
+<!-- Add additional services that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-functions.js"></script>
+
+<!-- Comment out (or don't include) services that you don't want to use -->
+<!-- <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-storage.js"></script> -->
+
+
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDBP6b19CZvNZDQcEAO6arsmaa10hs-w-Q",
+	  authDomain: "gis-pertanian.firebaseapp.com",
+	  databaseURL: "https://gis-pertanian.firebaseio.com",
+	  projectId: "gis-pertanian",
+	  storageBucket: "gis-pertanian.appspot.com",
+	  messagingSenderId: "121798300984",
+	  appId: "1:121798300984:web:1a6554871f729014"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script src="assets/js/index.js"></script>
+
+</body>
+</html>
