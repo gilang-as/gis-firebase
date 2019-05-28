@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>GIS - PERTANIAN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    
+    <!-- Bootstrap 3 - Optional -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    
+    <!-- Activ'Map plugin -->
+    <link rel="stylesheet" href="jquery-activmap/css/skin-compact/activmap-compact.css">
+    <link rel="stylesheet" href="jquery-activmap/css/skin-compact/activmap-dark.css">
+    <script src="jquery-activmap/js/jquery-activmap.min.js"></script>
+    <script src="jquery-activmap/js/markercluster.min.js"></script>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,300,700">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script>
+    </script>
+</head>
+<body>
+<div id="activmap-wrapper">
+    
+    <!-- Places panel (auto removable) -->
+    <div id="activmap-places">
+        <div id="activmap-results-num"></div>
+    </div>
+    
+    <!-- Activ'Map global wrapper -->
+    <div id="activmap-container">
+        <!-- Toolbar -->
+        <div id="activmap-ui-wrapper">
+            <div id="activmap-search">
+                
+                <!-- Optional: possibility for the user to change the center location -->
+                <input id="activmap-location" type="text" name="location" value="" placeholder="Location...">
+                
+                <!-- Optional: possibility for the user to be geolocated -->
+                <a class="activmap-action" id="activmap-geolocate" href="#"><i class="fa fa-crosshairs"></i></a>
+                <!-- Optional: possibility for the user to reset all the map (location, radius, filters) -->
+                
+                <a class="activmap-action" id="activmap-reset" href="#"><i class="fa fa-ban"></i></a>
+                
+                <!-- Optional: possibility for the user to target the results on the map -->
+                <a class="activmap-action" id="activmap-target" href="#"><i class="fa fa-bullseye"></i></a>
+                
+                <div>
+                    <!-- Optional: possibility for the user to change the radius -->
+                    Radius:
+                    <small>
+                        <input type="radio" name="activmap_radius" value="0"> None
+                        <input type="radio" name="activmap_radius" value="3"> 3km
+                        <input type="radio" name="activmap_radius" value="20"> 20km
+                        <input type="radio" name="activmap_radius" value="50"> 50km
+                        <input type="radio" name="activmap_radius" value="100"> 100km
+                    </small>
+                
+                </div>
+            </div>
+        
+            <!-- Activ'Map categories and tags -->
+            <div id="activmap-filters">
+                <div class="marker-selector">
+                    <input type="checkbox" name="marker_type[]" value="tag_kangkung" id="tag_kangkung">
+                    <label for="tag_kangkung"><i class="fa fa-leaf"></i>Kangkung</label>
+                </div>
+                <div class="marker-selector">
+                    <input type="checkbox" name="marker_type[]" value="tag_selada" id="tag_selada">
+                    <label for="tag_selada"><i class="fa fa-leaf"></i>Selada</label>
+                </div>
+                <div class="marker-selector">
+                    <input type="checkbox" name="marker_type[]" value="tag_sawi" id="tag_sawi">
+                    <label for="tag_sawi"><i class="fa fa-leaf"></i>Sawi</label>
+                </div>
+                <div class="marker-selector">
+                    <input type="checkbox" name="marker_type[]" value="tag_cabai" id="tag_cabai">
+                    <label for="tag_cabai"><i class="fas fa-pepper-hot"></i>Cabai</label>
+                </div>
+                <div class="marker-selector">
+                    <input type="checkbox" name="marker_type[]" value="tag_tomat" id="tag_tomat">
+                    <label for="tag_tomat"><i class="fas fa-lemon"></i>Tomat</label>
+                </div>
+                <div class="marker-selector">
+                    <input type="checkbox" name="marker_type[]" value="tag_pakcoy" id="tag_pakcoy">
+                    <label for="tag_pakcoy"><i class="fa fa-leaf"></i>Pakcoy</label>
+                </div>
+                <div class="marker-selector">
+                    <input type="checkbox" name="marker_type[]" value="tag_stroberi" id="tag_stroberi">
+                    <label for="tag_stroberi"><i class="fa fa-apple-alt"></i>Stroberi</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map container REQUIRED -->
+        <div id="activmap-canvas"></div>
+    </div>
+</div>
+ <!-- Firebase App is always required and must be first -->
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
+
+<!-- Add additional services that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-functions.js"></script>
+
+<!-- Comment out (or don't include) services that you don't want to use -->
+<!-- <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-storage.js"></script> -->
+
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDBP6b19CZvNZDQcEAO6arsmaa10hs-w-Q",
+	  authDomain: "gis-pertanian.firebaseapp.com",
+	  databaseURL: "https://gis-pertanian.firebaseio.com",
+	  projectId: "gis-pertanian",
+	  storageBucket: "gis-pertanian.appspot.com",
+	  messagingSenderId: "121798300984",
+	  appId: "1:121798300984:web:1a6554871f729014"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <!-- Google Maps API V3 -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;libraries=places&amp;language=en&amp;key=AIzaSyBhZn-Oqs8-O9UXgvOakmWrq7jiJkHceKE"></script>
+<script src="tra.js"></script>
+</body>
+</html>
